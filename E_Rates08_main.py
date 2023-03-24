@@ -6,7 +6,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 import PIL
 import PIL._tkinter_finder
-from classE_Rates07 import Data
+from classE_Rates08 import Data
 import gc
 from tkinter import messagebox as mBox
 import numpy as np
@@ -34,7 +34,7 @@ class Main:
     def _quit(self):
         self.win.quit()
         self.win.destroy()
-        exit()
+        
     def gcCollect(self):
         gc.collect()
     
