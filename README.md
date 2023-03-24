@@ -9,5 +9,6 @@
 # Wiele wykresów też możemy generować z dodatkowymi opcjami i zapisywać w katalogu "Reports"
 # W zakładce "Raport" możemy wygenerować raport w formacie txt i csv, zawierające tabele kursów z ustalonego wcześniej przedziału czasowego.
 # Raporty można generować od dnia 2004-05-04 (dane o tej daty są dostępne w API NBP)
-# Generowanie raportu z dużego przedziału czasu lub rysowanie wykresu (lub wykresów) z dużego przedziału czasu może trochę potrwać. Dzieje się tak, ponieważ pojedyncze zapytanie do API NBP nie może obejmować przedziału czasu dłuższego niż 93 dni. Docelowo problem ten zostanie rozwiązany zaimplementowaniem do aplikacji bazy danych (automatycznie aktualizującej się przy starcie aplikacji).
+# Generowanie raportu z dużego przedziału czasu lub rysowanie wykresu (lub wykresów) z dużego przedziału czasu może trochę potrwać. Dzieje się tak, ponieważ pojedyncze zapytanie do API NBP nie może obejmować przedziału czasu dłuższego niż 93 dni. Na przykład dla narysowania wykresu z 15 lat skrypt potrzebuje wykonać w pętli 60 zapytań do serwera NBP
+# Docelowo problem ten zostanie rozwiązany zaimplementowaniem do aplikacji bazy danych (automatycznie aktualizującej się przy starcie aplikacji).
 # Wszystkie pliki tworzone w aplikacji są automatycznie nazywane i umieszczane w katalogu "Reports".
