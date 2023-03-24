@@ -1,5 +1,5 @@
 # E_Rates - skrypt korzysta z danych api.nbp.pl
-# Po uruchomieniu skrypt pobiera aktualną tabelę kursów walut z API NBP w formacie JSON, parsuje je i wyświetla w odpowiednich zakładkach interfejsu graficznego. 
+# Po uruchomieniu skrypt pobiera aktualną tabelę kursów walut z API NBP w formacie JSON, parsuje je i wyświetla w odpowiednich zakładkach interfejsu graficznego (biblioteka Tkinter). 
 # Dodatkowo generuje plik w formacie txt, w którym zapisuje aktualną tabelę kursów. Plik jest zapisaywany lokalizacji skryptu, w katalogu "Reports"(tworzony automatycznie, jeśli nie istnieje)
 # Dzięki wykorzystaniu biblioteki Matplotlib, możemy w oknie głównym aplikacji w zakładce "Wykres", narysować wykres dowolnej waluty (dostępnej w API NBP) w porównaniu do Złotego
 # Dodatkowo możemy na ten wykres nałożyć linię trendu oraz min/max wartości na wykresie. Wykres rusujemy w wybranym przedziale czasowym
