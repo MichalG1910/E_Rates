@@ -7,16 +7,16 @@ import PIL._tkinter_finder
 
 class Data:
     def __init__(self):
-        self.filePath = os.path.dirname(sys.argv[0]) # ścieżka do pliku exchange_rates
+        self.filePath = os.path.dirname(sys.argv[0]) # ścieżka do naszego pliku exchange_rates
         self.today = datetime.date.today()
         
     def checkConnection(self):
         hostname = "nbp.pl"
         if sys.platform == 'linux': 
-            response = os.system("ping -c 1 " + hostname)
+            response = os.system("ping -c 1 " + hostname)   
         else:
             response = os.system("ping -n 1 " + hostname)
-
+            
         if response == 0:
             pass
         else:
@@ -54,10 +54,11 @@ class Data:
     def NBPratesUpDown(self):
         url = "https://api.nbp.pl/api/exchangerates/tables/a/last/2/?format=json"
         self.NBPreport(2, url, "mid")
+       
         self.ratesUpDown = self.csvList
-        
         del self.csvList
         
+    
     def NBPbidAsk(self):
         url = "https://api.nbp.pl/api/exchangerates/tables/c/?format=json"
         self.NBPreport(3, url, "bid")
@@ -77,7 +78,6 @@ class Data:
     
     def generateReport(self,startDate, endDate):
         self.num = 2
-        
         if not re.match(r"^20[0-2][0-9][-](0[1-9]|1[0-2])[-](0[1-9]|[1-2][0-9]|3[0-1])$",startDate) or not re.match(r"^20[0-2][0-9][-](0[1-9]|1[0-2])[-](0[1-9]|[1-2][0-9]|3[0-1])$",endDate):
             mBox.showerror("Uwaga", "Nieprawidłowy format daty, wprowadź nową datę")
         else:
@@ -173,7 +173,7 @@ class Data:
     def reportCreate(self, startDate, endDate):
         def file_write(fileWrite):
             erDataListLen = len(self.erDataList)
-            rpt = 0
+            rpt=0
             fileWrite.write(f'ilośc sprawdzanych dni: {self.daysLen}\nilość raportów NBP z tych dni (tylko dni pracujące): {len(self.data)}\n' )
             
             while rpt < erDataListLen:
@@ -216,7 +216,7 @@ class Data:
             print(tabulate(erFrame, showindex=True, headers=erFrame.columns))
             rpt += 1
         
-    def getDataForGraph(self, currencyName, timeRange, oneOrMultiNum):
+    def getDataForGraph(self, currencyName, timeRange, oneOrMultiNum, firstloopEDL = None):
         self.code = (currencyName[0:3]).lower()
         self.graphMidList, self.graphEffectiveDateList, self.gdList = [],[],[]
 
@@ -233,7 +233,7 @@ class Data:
                 self.gdList += graphData
                 runDate = runDate + stepTimedelta
                 if self.repeat == 2:
-                    date1_list = (list(self.firstloopEDL.split('-')))
+                    date1_list = (list(firstloopEDL.split('-')))
                     sdList = [int(i) for i in date1_list] 
                     stepDate = datetime.date(sdList[0], sdList[1], sdList[2])
                 else:
@@ -258,6 +258,7 @@ class Data:
                 self.yValuesMultiGraph = self.graphMidList
                 self.codeMulti = self.code
             
+            
             del graphData, self.graphEffectiveDateList, self.graphMidList, self.code
             
         if timeRange == "30 dni" or timeRange == "60 dni" or timeRange == "90 dni":
@@ -280,8 +281,7 @@ class Data:
             timeRangeLoop()   
         elif timeRange == "15 lat":
             self.dayRange, self.repeat, self.step = 5460, 60, 91
-            timeRangeLoop()
-
+            timeRangeLoop()  
  
     
     
