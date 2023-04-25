@@ -48,7 +48,7 @@ class Main:
     
     def info(self):
         infoWin = tk.Tk()
-        infoWin.geometry("335x200+800+400")
+        infoWin.geometry("335x180+800+400")
         self.winStyle(infoWin)
         ttk.Label(infoWin, text='E_Rates v1.01\napril 2022\nMichał Grabarz').grid(column=0, row=0, padx=55, pady=10)
         ttk.Label(infoWin, text='-ta aplikacja została napisana w celu nauki jezyka Python\n-this app was written to learn python', font=("Segoe Ui",8,), foreground='grey').grid(column=0, row=1, padx=20, pady=10)
@@ -528,7 +528,7 @@ class Main:
         graphObj.multiGraphList(self.viewNum, dataObj.rates, [i.get() for i in self.timeRangeVariableList], [i.get() for i in self.chVariableList], [i.get() for i in self.codeVariableList], self.codeCurrencyList)
         
         def buttonCreate():
-            ttk.Button(graphObj.winFull, text = "Zamknij okno", command = graphObj._exit, width=12).grid(column = 10, row = 0 , padx=5, pady=5, sticky=tk.E)
+            ttk.Button(graphObj.winFull, text = "Zamknij okno", command = graphObj._quit, width=12).grid(column = 10, row = 0 , padx=5, pady=5, sticky=tk.E)
             ttk.Button(graphObj.winFull, text = "zapisz", command = graphObj.runSaveGraphPNG2, width=8).grid(column = 10, row = 0 , padx=5, pady=5, sticky=tk.W)
         
         def drawGraph():
