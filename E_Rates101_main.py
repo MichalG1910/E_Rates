@@ -1,4 +1,4 @@
-import os, math, time
+import os, math, time, sys, subprocess
 import tkinter as tk
 from tkinter import ttk
 from tkinter import PhotoImage
@@ -9,7 +9,6 @@ from classE_Rates101_Graph import Graph
 import gc
 from tkinter import messagebox as mBox
 from tkinter import Menu
-print
 class Main:
     agr_number = 0
     
@@ -27,7 +26,7 @@ class Main:
         self.exchangeRatesTabel()
         self.graphGui()
         self.generateReportGui()
-        self.win.protocol("WM_DELETE_WINDOW", self._quit)
+        self.win.protocol("WM_DELETE_WINDOW", self._exit)
         self.win.title("E_Rates v.1.1".center(int(self.win.winfo_width()/1.7)))
         self.menu()
         
@@ -36,31 +35,44 @@ class Main:
         self.win.config(menu=self.menuBar)
         
         fileMenu = Menu(self.menuBar, tearoff=0)
-        fileMenu.add_command(label="New")
-        fileMenu.add_command(label="Save")
+        fileMenu.add_command(label="Info", command=self.info)
+        fileMenu.add_command(label="Restart", command=self._restart)
         fileMenu.add_separator()
-        fileMenu.add_command(label="Exit", command=self._quit)
+        fileMenu.add_command(label="Exit", command=self._exit)
         
         self.menuBar.add_cascade(label="File", menu=fileMenu)
         self.menuBar.add_command(command=self.change_theme,image=self.icon)
         self.menuBar.add_command(label = "__", command = self._minimalize)
-        self.menuBar.add_command(label = "x", command = self._quit)
+        self.menuBar.add_command(label = "x", command = self._exit)
         self.menuBar.image = self.icon
-        
+    
+    def info(self):
+        infoWin = tk.Tk()
+        infoWin.geometry("335x200+800+400")
+        self.winStyle(infoWin)
+        ttk.Label(infoWin, text='E_Rates v1.01\napril 2022\nMichał Grabarz').grid(column=0, row=0, padx=55, pady=10)
+        ttk.Label(infoWin, text='-ta aplikacja została napisana w celu nauki jezyka Python\n-this app was written to learn python', font=("Segoe Ui",8,), foreground='grey').grid(column=0, row=1, padx=20, pady=10)
+        ttk.Button(infoWin, text="Zamknij", command=infoWin.destroy).grid(column=0, row=2, padx=55)
+
+    def _restart(self):
+        self.win.quit()
+        self.win.destroy()
+        subprocess.call(sys.executable + ' "' + os.path.realpath(__file__) + '"')   
+    
+    def _exit(self):
+        self.win.quit()
+        self.win.destroy()
+
     def _minimalize(self):
         self.win.iconify()
     
-    def _quit(self):
-        self.win.quit()
-        self.win.destroy()
-        
     def gcCollect(self):
         gc.collect()
     
     def quitButton(self):
-        boldStyle = ttk.Style ()
+        boldStyle = ttk.Style()
         boldStyle.configure ("Bold.TButton", weight = "bold", foreground='black', font=20)
-        ttk.Button(self.win,text="X", command=self._quit, width=2, style = "Bold.TButton").grid(row=0, column=13, padx=5, pady=5, columnspan=2, sticky=tk.E)
+        ttk.Button(self.win,text="X", command=self._exit, width=2, style = "Bold.TButton").grid(row=0, column=13, padx=5, pady=5, columnspan=2, sticky=tk.E)
         
     def winStyle(self, window):
         window.tk.call('source', os.path.join(dataObj.filePath, 'azure.tcl'))
@@ -103,7 +115,6 @@ class Main:
             graphObj.refreshGraph(self.win, self.timeRange.get(), dataObj.xValues, dataObj.yValues, dataObj.codeOne, dataObj.codeCurrencyDict)
 
     def exchangeRatesTabel(self):
-        
         def mediumTab(): 
             tab1 = ttk.Frame(tabControl)
             
@@ -517,7 +528,7 @@ class Main:
         graphObj.multiGraphList(self.viewNum, dataObj.rates, [i.get() for i in self.timeRangeVariableList], [i.get() for i in self.chVariableList], [i.get() for i in self.codeVariableList], self.codeCurrencyList)
         
         def buttonCreate():
-            ttk.Button(graphObj.winFull, text = "Zamknij okno", command = graphObj._quit, width=12).grid(column = 10, row = 0 , padx=5, pady=5, sticky=tk.E)
+            ttk.Button(graphObj.winFull, text = "Zamknij okno", command = graphObj._exit, width=12).grid(column = 10, row = 0 , padx=5, pady=5, sticky=tk.E)
             ttk.Button(graphObj.winFull, text = "zapisz", command = graphObj.runSaveGraphPNG2, width=8).grid(column = 10, row = 0 , padx=5, pady=5, sticky=tk.W)
         
         def drawGraph():
