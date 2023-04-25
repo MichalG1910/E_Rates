@@ -35,6 +35,7 @@ class Main:
         self.win.config(menu=self.menuBar)
         
         fileMenu = Menu(self.menuBar, tearoff=0)
+        fileMenu.add_command(label="Pliki", command=self.openFileDir)
         fileMenu.add_command(label="Info", command=self.info)
         fileMenu.add_command(label="Restart", command=self._restart)
         fileMenu.add_separator()
@@ -46,6 +47,13 @@ class Main:
         self.menuBar.add_command(label = "x", command = self._exit)
         self.menuBar.image = self.icon
     
+    def openFileDir(self):
+        if os.path.exists(f"{dataObj.filePath}/reports"):
+            os.startfile(f"{dataObj.filePath}/reports")
+        else:
+            os.mkdir(os.path.join(dataObj.filePath, "reports")) 
+            os.startfile(f"{dataObj.filePath}/reports")
+        
     def info(self):
         infoWin = tk.Tk()
         infoWin.geometry("335x180+800+400")
