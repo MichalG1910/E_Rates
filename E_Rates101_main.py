@@ -48,11 +48,15 @@ class Main:
         self.menuBar.image = self.icon
     
     def openFileDir(self):
+        def choosePlatform():
+            if sys.platform == 'linux': subprocess.Popen(['xdg-open', f"{dataObj.filePath}/reports"])
+            else: os.startfile(f"{dataObj.filePath}/reports")
+        
         if os.path.exists(f"{dataObj.filePath}/reports"):
-            os.startfile(f"{dataObj.filePath}/reports")
+            choosePlatform()
         else:
             os.mkdir(os.path.join(dataObj.filePath, "reports")) 
-            os.startfile(f"{dataObj.filePath}/reports")
+            choosePlatform()
         
     def info(self):
         infoWin = tk.Tk()
@@ -65,7 +69,8 @@ class Main:
     def _restart(self):
         self.win.quit()
         self.win.destroy()
-        subprocess.call(sys.executable + ' "' + os.path.realpath(__file__) + '"')   
+        if sys.platform == 'linux': os.execl(sys.executable, sys.executable, *sys.argv)
+        else: subprocess.call(sys.executable + ' "' + os.path.realpath(__file__) + '"')   
     
     def _exit(self):
         self.win.quit()
