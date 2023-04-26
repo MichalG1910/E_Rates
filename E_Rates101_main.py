@@ -48,15 +48,15 @@ class Main:
         self.menuBar.image = self.icon
     
     def openFileDir(self):
-        def choosePlatform():
+        def openPlatform():
             if sys.platform == 'linux': subprocess.Popen(['xdg-open', f"{dataObj.filePath}/reports"])
             else: os.startfile(f"{dataObj.filePath}/reports")
         
         if os.path.exists(f"{dataObj.filePath}/reports"):
-            choosePlatform()
+            openPlatform()
         else:
             os.mkdir(os.path.join(dataObj.filePath, "reports")) 
-            choosePlatform()
+            openPlatform()
         
     def info(self):
         infoWin = tk.Tk()
