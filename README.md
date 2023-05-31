@@ -1,15 +1,74 @@
-# E_Rates - skrypt korzysta z danych api.nbp.pl
-# Po uruchomieniu skrypt pobiera aktualną tabelę kursów walut z API NBP w formacie JSON, parsuje je i wyświetla w odpowiednich zakładkach interfejsu graficznego (biblioteka Tkinter). 
-# Dodatkowo generuje plik w formacie txt, w którym zapisuje aktualną tabelę kursów. Plik jest zapisaywany lokalizacji skryptu, w katalogu "Reports"(tworzony automatycznie, jeśli nie istnieje)
-# Dzięki wykorzystaniu biblioteki Matplotlib, możemy w oknie głównym aplikacji w zakładce "Wykres", narysować wykres dowolnej waluty (dostępnej w API NBP) w porównaniu do Złotego
-# Dodatkowo możemy na ten wykres nałożyć linię trendu oraz min/max wartości na wykresie. Wykres rusujemy w wybranym przedziale czasowym
-# Wykres ten później możemy zapisać w katalogu "Reports" (w formacie PNG)
-# W zakładce "Wiele wykresów" możemy generować do 15 wykresów jednocześnie (będą wyświetlone w jednym oknie pełnoekranowym). 
-# Mamy możliwość narysowania w jednym oknie wielu wykresów jednej waluty w różnych przedziałach czasowych (dostępne są 2 widoki do generowania wielu wykresów)
-# Wiele wykresów też możemy generować z dodatkowymi opcjami i zapisywać w katalogu "Reports"
-# W zakładce "Wiele Wykresów" po zaznaczeniu odpowiednich opcji możemy wygenerować dowolną liczbę linii (walut) na jednym wykresie. Linie generujemy w tym samym przedziale czasu. Okno otwiera się na pełnym ekranie. Możemy taki wykres zapisać w formacie PNG w katalogu "Reports"
-# W zakładce "Raport" możemy wygenerować raport w formacie txt i csv, zawierające tabele kursów z ustalonego wcześniej przedziału czasowego.
-# Raporty można generować od dnia 2004-05-04 (dane o tej daty są dostępne w API NBP)
-# Generowanie raportu z dużego przedziału czasu lub rysowanie wykresu (lub wykresów) z dużego przedziału czasu może trochę potrwać. Dzieje się tak, ponieważ pojedyncze zapytanie do API NBP nie może obejmować przedziału czasu dłuższego niż 93 dni. Na przykład dla narysowania wykresu z 15 lat skrypt potrzebuje wykonać w pętli 60 zapytań do serwera NBP
-# Docelowo problem ten zostanie rozwiązany zaimplementowaniem do aplikacji bazy danych (automatycznie aktualizującej się przy starcie aplikacji).
-# Wszystkie pliki tworzone w aplikacji są automatycznie nazywane i umieszczane w katalogu "Reports" w katalogu głównym skryptu.
+# E_Rates
+Current NBP exchange rates - visualizations, historical reports
+
+
+## Table of Contents
+* [General Info](#general-information)
+* [Technologies Used](#technologies-used)
+* [Features](#features)
+* [Screenshots](#screenshots)
+* [Setup](#setup)
+* [Theme](#theme)
+* [Contact](#contact)
+* [License](#license)
+
+
+## General Information
+- The application is used to download/visualize current and historical exchange rates from a given time period published by the National Bank of Poland (NBP). It uses the bank's API (api.nbp.pl).
+- The aim of the project was to expand the knowledge and consolidate the author's skills in programming in Python and to use in practice knowledge of SQL and Postgresql databases.
+
+
+## Technologies Used
+- python 3.11.2
+- PostgreSQL 15.2
+- Tkinter 8.6
+- Matplotlib 3.5.2
+
+
+## Features
+- Works on operating systems: Linux, Windows
+- Three working modes:
+  - online - all necessary data are downloaded from NBP servers (database is not required)
+  - online with a database - after starting, it creates/updates the database. All data later is retrieved from this current database.
+  - offline - runs without internet connection. All data is taken from the database.
+- Available in two themes: dark and light
+- Current tables: average exchange rates, bid/ask exchange rates, Last 30 exchange rate quotes
+- Generating charts of exchange rates in relation to PLN in various display configurations:
+  - 1 currency rate chart in the main window
+  - from 1 to 15 currency charts in different/same time periods in one full-screen window
+  - from 1 to all published exchange rates on one chart in a fullscreen window
+  - with a trend line,
+  - with min/max value
+  - each generated graph can be saved in .png format in default directory "Reports"
+  - available time periods: 30 days, 60 days, 90 days, half a year, one year, 2 years, 5 years, 10 years, 15 years
+  - available two views to generate multiple charts
+- Generating reports in a given time period (start date, end date):
+  - in .txt format with full tables for each day
+  - in .csv format (ready to be imported into a spreadsheet)
+  - each generated report is saved in the default directory "Reports"  
+
+
+## Screenshots
+![dark mode main window](./img/dark_mode_main_window.png)
+![light mode main window](./img/light_mode_main_window.png)
+![15 charts in fullscreen mode](./img/15_charts.png)
+![one multichart in fullscreen mode](./img/one_multichart.png)
+
+
+## Setup
+- To run the script in the mode of work without a database, it is enough to copy the repository files to the computer with the python interpreter installed. Custom libraries used in the script and required to run: tkinter, gc, PIL, psycopg2, functools, pandas, numpy, tabulate.
+- To run the script in database mode, PostgreSQL must be installed and the server configured. For more information, please visit https://www.postgresql.org/download/
+
+
+## Theme
+The beautiful theme created by rdbdnde 'Azure theme for ttk' is responsible for the appearance of the program
+https://github.com/rdbende/Azure-ttk-theme
+
+
+## Contact
+Created by Michał Grabarz grabarzmichal@gmail.com
+
+
+
+## License 
+This project is open source and available under the [MIT License](./License.txt)
