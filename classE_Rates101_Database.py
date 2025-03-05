@@ -90,10 +90,10 @@ class Scenario:
    def validateLogin(self, username, password, hostname, port):
       dataObj = Data()
       dataObj.checkConnection(self.workingMode)
-      print("username entered :", username.get())
-      print("password entered :", len(password.get()) * '\u25CF')
-      print("hostname entered :", hostname.get())
-      print("port entered     :", port.get())
+      print("username entered :", username.get())#postgres
+      print("password entered :", len(password.get()) * '\u25CF')#grabarzmichal1910
+      print("hostname entered :", hostname.get())#127.0.0.1
+      print("port entered     :", port.get())#5432
       
       if dataObj.checkConnectionFailure == False:
          self.updateDatabase()
